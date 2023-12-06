@@ -90,3 +90,4 @@ fastlane/test_output
 iOSInjectionProject/
 CompositionalLayoutSample/CompositionalLayoutSample.xcodeproj/project.xcworkspace/xcshareddata/IDEWorkspaceChecks.plist
 CompositionalLayoutSample/CompositionalLayoutSample.xcodeproj/project.xcworkspace/contents.xcworkspacedata
+.DS_Store
