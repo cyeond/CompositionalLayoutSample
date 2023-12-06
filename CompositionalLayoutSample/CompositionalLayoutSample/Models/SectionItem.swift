@@ -7,5 +7,5 @@
 
 enum SectionItem: Hashable {
     case banner(SectionItemComponents)
-    case carousel(SectionItemComponents)
+    case list(SectionItemComponents)
 }

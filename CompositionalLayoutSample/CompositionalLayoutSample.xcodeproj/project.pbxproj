@@ -20,6 +20,7 @@
 		7824A59D2B20357D00B0129A /* Section.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824A59C2B20357D00B0129A /* Section.swift */; };
 		7824A59F2B2035BB00B0129A /* SectionItemComponents.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824A59E2B2035BB00B0129A /* SectionItemComponents.swift */; };
 		7824A5A12B20518A00B0129A /* SectionItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824A5A02B20518A00B0129A /* SectionItem.swift */; };
+		7824A5A52B206BFB00B0129A /* ListCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7824A5A42B206BFB00B0129A /* ListCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -47,6 +48,7 @@
 		7824A59C2B20357D00B0129A /* Section.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Section.swift; sourceTree = "<group>"; };
 		7824A59E2B2035BB00B0129A /* SectionItemComponents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionItemComponents.swift; sourceTree = "<group>"; };
 		7824A5A02B20518A00B0129A /* SectionItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SectionItem.swift; sourceTree = "<group>"; };
+		7824A5A42B206BFB00B0129A /* ListCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -141,6 +143,7 @@
 			isa = PBXGroup;
 			children = (
 				7824A5932B20191C00B0129A /* BannerCollectionViewCell.swift */,
+				7824A5A42B206BFB00B0129A /* ListCollectionViewCell.swift */,
 			);
 			path = CollectionViewCells;
 			sourceTree = "<group>";
@@ -256,6 +259,7 @@
 			files = (
 				7824A59D2B20357D00B0129A /* Section.swift in Sources */,
 				7824A59F2B2035BB00B0129A /* SectionItemComponents.swift in Sources */,
+				7824A5A52B206BFB00B0129A /* ListCollectionViewCell.swift in Sources */,
 				7813E20A2B1EAB0700267669 /* MainViewController.swift in Sources */,
 				7813E2062B1EAB0700267669 /* AppDelegate.swift in Sources */,
 				7824A5942B20191C00B0129A /* BannerCollectionViewCell.swift in Sources */,
