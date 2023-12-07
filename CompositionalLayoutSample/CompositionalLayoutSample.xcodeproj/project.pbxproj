@@ -101,7 +101,7 @@
 				7824A5902B20181E00B0129A /* Application */,
 				7824A59B2B20357000B0129A /* Models */,
 				7824A5A22B20525200B0129A /* Views */,
-				788564212B21933600E80993 /* Utils */,
+				788564212B21933600E80993 /* Data */,
 			);
 			path = CompositionalLayoutSample;
 			sourceTree = "<group>";
@@ -142,7 +142,7 @@
 			isa = PBXGroup;
 			children = (
 				7813E2092B1EAB0700267669 /* MainViewController.swift */,
-				7885641B2B2169D300E80993 /* ButtonsView.swift */,
+				788564222B219C1000E80993 /* Subviews */,
 				7824A5A32B20526D00B0129A /* CollectionViewCells */,
 			);
 			path = Views;
@@ -157,12 +157,20 @@
 			path = CollectionViewCells;
 			sourceTree = "<group>";
 		};
-		788564212B21933600E80993 /* Utils */ = {
+		788564212B21933600E80993 /* Data */ = {
 			isa = PBXGroup;
 			children = (
 				7885641F2B217A2400E80993 /* DummyData.swift */,
 			);
-			path = Utils;
+			path = Data;
+			sourceTree = "<group>";
+		};
+		788564222B219C1000E80993 /* Subviews */ = {
+			isa = PBXGroup;
+			children = (
+				7885641B2B2169D300E80993 /* ButtonsView.swift */,
+			);
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
