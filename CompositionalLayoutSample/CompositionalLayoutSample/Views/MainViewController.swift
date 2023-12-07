@@ -9,13 +9,16 @@ import UIKit
 import SnapKit
 
 class MainViewController: UIViewController {
+    let buttonsView = ButtonsView()
     let collectionView = UICollectionView(frame: .zero, collectionViewLayout: .init())
     private var dataSource: UICollectionViewDiffableDataSource<Section, SectionItem>?
+    private var listLayoutType: ListType = .single
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         setUI()
+        setButtonAction()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -28,11 +31,28 @@ class MainViewController: UIViewController {
     }
     
     private func setUI() {
+        self.view.addSubview(buttonsView)
         self.view.addSubview(collectionView)
+        self.view.backgroundColor = .black
+        
+        buttonsView.snp.makeConstraints {
+            $0.horizontalEdges.equalToSuperview()
+            $0.top.equalTo(view.safeAreaLayoutGuide)
+            $0.height.equalTo(50.0)
+        }
         
         collectionView.snp.makeConstraints {
-            $0.edges.equalToSuperview()
+            $0.top.equalTo(buttonsView.snp.bottom)
+            $0.horizontalEdges.bottom.equalToSuperview()
         }
+        
+        buttonsView.changeToFirstLayoutButton.setTitleColor(.systemBlue, for: .normal)
+    }
+    
+    private func setButtonAction() {
+        buttonsView.changeToFirstLayoutButton.addTarget(self, action: #selector(changeLayoutButtonTapped), for: .touchUpInside)
+        buttonsView.changeToSecondLayoutButton.addTarget(self, action: #selector(changeLayoutButtonTapped), for: .touchUpInside)
+        buttonsView.changeToThirdLayoutButton.addTarget(self, action: #selector(changeLayoutButtonTapped), for: .touchUpInside)
     }
     
     private func setCollectionView() {
@@ -43,19 +63,13 @@ class MainViewController: UIViewController {
     
     private func createCollectionViewLayout() -> UICollectionViewCompositionalLayout {
         let layoutConfig = UICollectionViewCompositionalLayoutConfiguration()
-        layoutConfig.interSectionSpacing = 50.0
         
         return UICollectionViewCompositionalLayout(sectionProvider: { [weak self] sectionIndex, environment in
-            switch sectionIndex {
-            case 0:
-                return self?.createBannerSection()
-            default:
-                return self?.createBannerSection()
-            }
+            return self?.createListSection()
         }, configuration: layoutConfig)
     }
     
-    private func createBannerSection() -> NSCollectionLayoutSection {
+    private func createListSection() -> NSCollectionLayoutSection {
         let deviceWidth = view.window?.windowScene?.screen.bounds.width ?? 200.0
         
         // item
@@ -63,28 +77,12 @@ class MainViewController: UIViewController {
         let item = NSCollectionLayoutItem(layoutSize: itemSize)
         
         // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(deviceWidth))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
+        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .absolute(deviceWidth/CGFloat(listLayoutType.rawValue)))
+        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitem: item, count: listLayoutType.rawValue)
+        group.contentInsets = .init(top: 10.0, leading: 0, bottom: 0, trailing: 0)
         
         // section
         let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
-        
-        return section
-    }
-    
-    private func createListSection() -> NSCollectionLayoutSection {
-        // item
-        let itemSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(1.0))
-        let item = NSCollectionLayoutItem(layoutSize: itemSize)
-        
-        // group
-        let groupSize = NSCollectionLayoutSize(widthDimension: .fractionalWidth(1.0), heightDimension: .fractionalHeight(200.0))
-        let group = NSCollectionLayoutGroup.horizontal(layoutSize: groupSize, subitems: [item])
-        
-        // section
-        let section = NSCollectionLayoutSection(group: group)
-        section.orthogonalScrollingBehavior = .groupPaging
         
         return section
     }
@@ -109,25 +107,24 @@ class MainViewController: UIViewController {
     }
     
     private func setDataSourceSnapshot() {
-        let deviceWidth = view.window?.windowScene?.screen.bounds.width ?? 200.0
+        let listItems = DUMMY_ITEMS.map { SectionItem.list($0) }
         var snapshot = NSDiffableDataSourceSnapshot<Section, SectionItem>()
-        let banner1Items = [
-            SectionItem.banner(SectionItemComponents(title: "First", subtitle: "", imageUrl: "https://source.unsplash.com/user/c_v_r/\(Int(deviceWidth))x\(Int(deviceWidth))")),
-            SectionItem.banner(SectionItemComponents(title: "Second", subtitle: "", imageUrl: "https://source.unsplash.com/user/c_v_r/\(Int(deviceWidth))x\(Int(deviceWidth))")),
-            SectionItem.banner(SectionItemComponents(title: "Third", subtitle: "", imageUrl: "https://source.unsplash.com/user/c_v_r/\(Int(deviceWidth))x\(Int(deviceWidth))"))
-        ]
-        
-        let list1Items = [
-            SectionItem.list(SectionItemComponents(title: "First", subtitle: "111", imageUrl: "https://source.unsplash.com/user/c_v_r/100x100")),
-            SectionItem.list(SectionItemComponents(title: "Second", subtitle: "222", imageUrl: "https://source.unsplash.com/user/c_v_r/100x100")),
-            SectionItem.list(SectionItemComponents(title: "Third", subtitle: "333", imageUrl: "https://source.unsplash.com/user/c_v_r/100x100"))
-        ]
-        
-        snapshot.appendSections([Section(id: "Banner1"), Section(id: "List1")])
-        snapshot.appendItems(banner1Items, toSection: Section(id: "Banner1"))
-        snapshot.appendItems(list1Items, toSection: Section(id: "List1"))
+
+        snapshot.appendSections([Section(id: "List")])
+        snapshot.appendItems(listItems, toSection: Section(id: "List"))
         
         dataSource?.apply(snapshot)
+    }
+    
+    @objc func changeLayoutButtonTapped(sender: UIButton) {
+        listLayoutType = .init(rawValue: sender.tag) ?? .single
+        collectionView.setCollectionViewLayout(createCollectionViewLayout(), animated: false)
+        collectionView.scrollToItem(at: IndexPath(item: 0, section: 0), at: .centeredVertically, animated: true)
+        
+        buttonsView.changeToFirstLayoutButton.setTitleColor(.white, for: .normal)
+        buttonsView.changeToSecondLayoutButton.setTitleColor(.white, for: .normal)
+        buttonsView.changeToThirdLayoutButton.setTitleColor(.white, for: .normal)
+        sender.setTitleColor(.systemBlue, for: .normal)
     }
 }
 

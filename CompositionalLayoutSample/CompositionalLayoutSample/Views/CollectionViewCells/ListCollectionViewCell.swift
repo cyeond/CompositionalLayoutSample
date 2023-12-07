@@ -33,18 +33,18 @@ class ListCollectionViewCell: UICollectionViewCell {
         imageView.snp.makeConstraints {
             $0.top.equalToSuperview()
             $0.horizontalEdges.equalToSuperview().inset(10.0)
-            $0.height.equalTo(100.0)
+            $0.bottom.equalTo(titleLabel.snp.top)
         }
         
         titleLabel.snp.makeConstraints {
-            $0.top.equalTo(imageView.snp.bottom)
+            $0.bottom.equalTo(subtitleLabel.snp.top)
             $0.horizontalEdges.equalToSuperview().inset(10.0)
             $0.height.equalTo(30.0)
         }
         
         subtitleLabel.snp.makeConstraints {
-            $0.top.equalTo(titleLabel.snp.bottom)
             $0.horizontalEdges.equalToSuperview().inset(10.0)
+            $0.bottom.equalToSuperview().inset(10.0)
             $0.height.equalTo(30.0)
         }
     }
